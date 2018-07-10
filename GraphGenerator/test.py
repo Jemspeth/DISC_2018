@@ -5,8 +5,8 @@ import sys
 
 def main():
 
-  if len(sys.argv) != 4 or int(sys.argv[3]) < 3 or int(sys.argv[2]) < 1 or 
-    int(sys.argv[1]) < 1:
+  if len(sys.argv) != 4 or int(sys.argv[3]) < 3 or int(sys.argv[2]) < 1 \
+    or int(sys.argv[1]) < 1:
     exit_message = 'Input parameters incompatible with Generator. \
               \nUsage: python test.py <scale_left> <scale_right> <edge_factor> \
               \n\n<scale_left> : Number of vertices in left set (N) = 2^scale_left \
