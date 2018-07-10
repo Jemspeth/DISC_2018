@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 #include "Vector.h"
 
 void vec_init( Vector *v, int cap )
@@ -46,7 +45,6 @@ void vec_add_int( Vector *v, int item )
   int *tmp = malloc(sizeof(int));
   *tmp = item;
   v->items[v->total++] = tmp;
-  free(tmp);
 }
 
 void vec_set( Vector *v, int index, void *item )
@@ -81,19 +79,32 @@ void vec_delete( Vector *v, int index )
   if (index < 0 || index >= v->total)
     return;
 
+  free(v->items[index]);
   v->items[index] = NULL;
+  int total = v->total - 1;
 
-  for (int i = index; i < v->total - 1; i++)
+  for (int i = index; i < total; i++)
   {
-    v->items[i] = v->items[i + 1];
-    v->items[i + 1] = NULL;
+     v->items[i] = v->items[i + 1];
   }
-
+  v->items[v->total - 1] = NULL;
   v->total--;
 
   if (v->total > 0 && v->total == v->capacity / 4)
     vec_resize(v, v->capacity / 2);
 }
+
+/*
+void vec_qpop( Vector *v )
+{
+  if( v->total > 0 )
+  {
+    free(v->items[0]);
+    v->items[0] = NULL;
+    v->items = &v->items[1];
+  }
+}
+*/
 
 void vec_free( Vector *v )
 {
